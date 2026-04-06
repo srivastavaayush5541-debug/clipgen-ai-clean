@@ -11,8 +11,9 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/video/:jobId', express.static(path.join(__dirname, 'temp')));
 
-// ===== FRONTEND STATIC SERVING =====
-app.use(express.static(path.join(__dirname, '../'))); // Serve Vite build/public
+// Static files from public/ - BEFORE API routes
+app.use(express.static(path.join(__dirname, '../public')));
+
 
 // Debug logs - Render deployment test
 console.log("🔥 SERVER.JS IS RUNNING");
