@@ -11,33 +11,22 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/video/:jobId', express.static(path.join(__dirname, 'temp')));
 
+// ===== FRONTEND STATIC SERVING =====
+app.use(express.static(path.join(__dirname, '../'))); // Serve Vite build/public
+
 // Debug logs - Render deployment test
 console.log("🔥 SERVER.JS IS RUNNING");
 
-app.get('/api/test', (req, res) => {
-  res.json({ message: "Backend working ✅" });
-});
-
-// Health check
-app.get('/', (req, res) => {
-  res.json({ 
-    status: 'ClipGen AI Backend Ready',
-    geminiReady: !!process.env.GEMINI_API_KEY,
-    replicateReady: !!process.env.REPLICATE_API_TOKEN,
-    pixabayReady: !!process.env.PIXABAY_API_KEY,
-    timestamp: new Date().toISOString()
-  });
-});
-
-
-
-
-
-
-
-
-// Video API routes FIRST
+// ===== API ROUTES FIRST =====
 app.use('/api/video', require('./routes/video'));
+
+// ===== FRONTEND STATIC SERVING AFTER APIs =====
+app.use(express.static(path.join(__dirname, '../')));
+
+// ===== SPA FALLBACK LAST =====
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
 
 
 // Error handling middleware
