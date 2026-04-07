@@ -1,6 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+
+const publicPath = path.resolve(__dirname, '../public');
+
+console.log("STATIC PATH:", publicPath);
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,12 +15,17 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/video/:jobId', express.static(path.join(__dirname, 'temp')));
 
-// Static files from public/ - BEFORE API routes
-app.use(express.static(path.join(__dirname, '../public')));
+// Static files from public/ build - BEFORE API routes
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Debug logs - Render deployment test
+
 console.log("🔥 SERVER.JS IS RUNNING");
+console.log("Serving static from:", path.resolve(__dirname, '../public'));
+console.log("Root static from:", path.resolve(__dirname, '../'));
+console.log("SPA fallback:", path.resolve(__dirname, '../dist/index.html'));
+
 
 // ===== API ROUTES FIRST =====
 app.use('/api/video', require('./routes/video'));
@@ -25,9 +34,11 @@ app.use('/api/video', require('./routes/video'));
 app.use(express.static(path.join(__dirname, '../')));
 
 // ===== SPA FALLBACK LAST =====
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 
 
 // Error handling middleware
