@@ -13,7 +13,7 @@ import Contact from "./pages/Contact";
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { logout } from './firebase';
-import ErrorBoundary from "./components/ErrorBoundary";
+// import ErrorBoundary from "./components/ErrorBoundary";
 import './App.css';
 
 function App() {
@@ -235,7 +235,7 @@ const generateVideo = async (scriptInput, voiceInput, styleInput) => {
   return (
 
 
-    <ErrorBoundary>
+<>
 
       <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 to-blue-50 relative">
         {/* GLOBAL NAVBAR */}
@@ -369,7 +369,7 @@ const generateVideo = async (scriptInput, voiceInput, styleInput) => {
 
 
     </div>
-  </ErrorBoundary>
+</>
   );
 }
 

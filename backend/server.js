@@ -15,9 +15,10 @@ origin: [
   "http://localhost:5173",
   "https://clipgen-ai-clean.onrender.com"
 ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+methods: ["GET", "POST"],
+credentials: true
 }));
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/video/:jobId', express.static(path.join(__dirname, 'temp')));

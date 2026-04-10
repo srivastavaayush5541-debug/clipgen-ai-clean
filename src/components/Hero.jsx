@@ -13,7 +13,7 @@ const handleGenerate = () => {
       return;
     }
     
-    onGenerate(localScript, voice, style);
+    onGenerate(localScript || 'Demo video', voice, style);
   };
 
 
